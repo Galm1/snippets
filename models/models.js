@@ -1,18 +1,13 @@
 const mongoose = require('mongoose');
 
-const snippetModel = new mongoose.Schema({
-    title: {type: String, required: true},
+const snippetSchema = new mongoose.Schema({
+    title: {type: String, required: true, unique: true},
     body: {type: String, required: true},
     notes: {type: String},
     language: {type: String},
     tags: {type: String}
 })
 
+const snippets = mongoose.model('snippet', snippetSchema);
 
-module.exports = {
-  snippets: snippetModel
-}
-
-// const snippet = mongoose.model('snippets', snippetSchema);
-//
-// module.exports = snippet;
+module.exports = snippets;

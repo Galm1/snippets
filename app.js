@@ -6,10 +6,12 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const app = express();
 const models = require('./models/models.js');
-const MongoClient = require('mongodb').MongoClient,
-  assert = require('assert');
-const url = 'mongodb://localhost:27017/todo';
+const MongoClient = require('mongodb').MongoClient, assert = require('assert');
+const url = 'mongodb://localhost:27017/snippets';
 const ObjectId = require('mongodb').ObjectID;
+const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+
 app.engine('mustache', mustacheExpress());
 app.set('views', './views');
 app.set('view engine', 'mustache');
@@ -23,6 +25,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+let database;
 
 let profiles = [{
   username: 'username',
@@ -43,8 +46,9 @@ app.use(function(req, res, next) {
 })
 
 app.get('/', function(req, res) {
-  res.render('index')
-})
+  snippet.find().then(function(snip) {
+      res.render('index', {data: snip})
+  })})
 
 app.post('/login', function(req, res) {
   let username = req.body.username;
@@ -64,6 +68,41 @@ app.post('/login', function(req, res) {
     })
   }
 })
+
+///////////////////////////////////////
+
+
+// let newTitle = 'first snipperino';
+// const newSnippet = new snippets({title: newTitle, body: newCode});
+// snippet.save()
+//   .then(function () {
+//     console.log('saved ' + name);
+//     return newSnippet.findOne({title: newTitle})
+//   }).then(function(results) {
+//     console.log('\nfindOne returned\n' + results);
+//     return newSnippet.find({body: 'some coderino'})
+//   }).then(function (results) {
+//     console.log('\n\nfind returned ' + results.length + ' results');
+//   }).catch(function (error) {
+//     console.log('error ' + JSON.stringify(error));
+//   });
+
+
+
+
+// app.post('/', function(req, res) {
+//   const addsnip = req.body.title;
+//   let newSnippet = new snippet({snippets: addSnippet});
+//   newSnippet.save().then(function () {
+//     console.log('added a new snippet');
+//     return snippet.find({});
+//   }).catch(function (error) {
+//     console.log('error ' + JSON.stringify(error));
+//   });
+//   res.redirect('/');
+// })
+
+
 
 
 

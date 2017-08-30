@@ -1,0 +1,20 @@
+html {
+  display: flex;
+  font-family: sans-serif;
+}
+
+.wrapper {
+  display: flex;
+  border: solid 4px black;
+  flex-wrap: wrap;
+}
+
+.snippetForm {
+  display: flex;
+  border: solid 2px black;
+}
+
+.tags {
+  display: flex;
+  border: solid 1px black
+}
