@@ -8,6 +8,11 @@ const snippetModel = new mongoose.Schema({
     tags: {type: String}
 })
 
-const snippet = mongoose.model('snippets', snippetSchema);
 
-module.exports = snippet;
+module.exports = {
+  snippets: snippetModel
+}
+
+// const snippet = mongoose.model('snippets', snippetSchema);
+//
+// module.exports = snippet;
